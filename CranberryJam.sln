@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 
 Project("{DF288C91-3559-C9F7-9DB0-C72A48996455}") = "CranberryJam", "Assembly-CSharp.csproj", "{D2F05E59-08A3-18C4-8BA9-5A0284B365B8}"
 EndProject
+Project("{DF288C91-3559-C9F7-9DB0-C72A48996455}") = "CranberryJam", "Assembly-CSharp-Editor.csproj", "{76A7425B-315B-4384-2568-2632730772ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,11 +15,15 @@ Global
 		{D2F05E59-08A3-18C4-8BA9-5A0284B365B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2F05E59-08A3-18C4-8BA9-5A0284B365B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2F05E59-08A3-18C4-8BA9-5A0284B365B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76A7425B-315B-4384-2568-2632730772ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76A7425B-315B-4384-2568-2632730772ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76A7425B-315B-4384-2568-2632730772ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76A7425B-315B-4384-2568-2632730772ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-														GlobalSection(MonoDevelopProperties) = preSolution
+																					GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1

@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using InControl;
 
 public class Blimp : MonoBehaviour {
 
 	Rigidbody rb;
 	public GameObject junk;
 	public float movementSpeed;
+	public int playerNum;
 
 	public string moveXAxis;
 	public string moveYAxis;
@@ -24,9 +26,9 @@ public class Blimp : MonoBehaviour {
 		rb.AddForce(new Vector2(xd, yd) * movementSpeed);
 	}
 
-	void FireInput() {
+	void FireInput(bool fired) {
 		bool fire = false;
-		fire = Input.GetButtonDown(fireButton); 
+		fire = fired; 
 		if(fire){
 			float xd = Input.GetAxis(fireXAxis);
 			float yd = -Input.GetAxis(fireYAxis);
@@ -40,7 +42,10 @@ public class Blimp : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		MovementInput();
-		FireInput();
+		var inputDevice = (playerNum == 1) ? InputManager.Devices[1]: InputManager.Devices[0];
+		float xd = inputDevice.LeftStickX;
+		float yd = inputDevice.LeftStickY;
+		rb.AddForce(new Vector2(xd, yd) * movementSpeed);
+		FireInput(inputDevice.Action1);
 	}
 }
