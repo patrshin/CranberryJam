@@ -8,7 +8,7 @@ public class GameScript : MonoBehaviour {
 	public GameObject item;
 	public float maxDistance; 
 	float time = 0.0f;
-	float itemTimer = 5f;
+	float itemTimer = 10f;
 	int itemCount = 0;
 
 	// Use this for initialization
@@ -27,7 +27,7 @@ public class GameScript : MonoBehaviour {
 		if (p2ViewportCoords.y < 0) {
 			Application.LoadLevel(2);
 		}
-		if (time > itemTimer && itemCount < 4) {
+		if (time > itemTimer) {
 			float randomX = (Random.value>.5f?-1:1)*Random.Range (0f,7f);
 			float randomY = (Random.value>.5f?-1:1)*Random.Range (0f,2f);
 			float distance1 = Vector3.Distance(new Vector3(randomX, randomY, 0), p1.transform.position);
@@ -42,7 +42,6 @@ public class GameScript : MonoBehaviour {
 			o.transform.position = new Vector3 (randomX + transform.position.x,
 			                                    randomY + transform.position.y, 0);
 			time = 0f;
-			itemCount++;
 		}
 	}
 }

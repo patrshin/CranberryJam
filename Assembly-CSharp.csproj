@@ -159,6 +159,7 @@
      <Compile Include="Assets\Scripts\ChargeGauge.cs" />
      <Compile Include="Assets\Scripts\GameScript.cs" />
      <Compile Include="Assets\Scripts\Ground.cs" />
+     <Compile Include="Assets\Scripts\Item.cs" />
      <Compile Include="Assets\Scripts\MenuScript.cs" />
      <Compile Include="Assets\Scripts\ProjectileScript.cs" />
      <Compile Include="Assets\Scripts\Turret.cs" />

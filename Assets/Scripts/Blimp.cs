@@ -2,6 +2,14 @@
 using System.Collections;
 using InControl;
 
+
+public enum ItemType {
+	DUMP,
+	BOOST,
+	HEAVY,
+	NONE
+};
+
 public class Blimp : MonoBehaviour {
 
 	Rigidbody rb;
@@ -15,11 +23,13 @@ public class Blimp : MonoBehaviour {
 	public float projectileSpeed;
 	public float projectileOffset;
 	public float stabilizationScale;
-
+	public ItemType currItem = ItemType.NONE;
+	
 	private GameObject WeightBar;
 	public GameObject WeightBarPrefab;
 	private GameObject ChargeBar;
 	public GameObject ChargeBarPrefab;
+	//private GameObject ItemStatus;
 
 	// Use this for initialization
 	void Start () {
@@ -61,7 +71,22 @@ public class Blimp : MonoBehaviour {
 		WeightBar.GetComponent<ChargeGauge> ().color = Color.Lerp(Color.green, Color.red, WeightProportion);
 		WeightBar.GetComponent<ChargeGauge> ().charge = Bucket.GetComponent<Rigidbody>().mass;
 	}
-	
+
+	void ItemInput (bool trigger, ItemType item) {
+		if (trigger) {
+			if (item == ItemType.BOOST) {
+
+			}
+			if (item == ItemType.DUMP) {
+				
+			}
+			if (item == ItemType.HEAVY) {
+				
+			}
+			item = ItemType.NONE;
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
 		var inputDevice = (playerNum == 1) ? InputManager.Devices[1]: InputManager.Devices[0];
@@ -74,10 +99,17 @@ public class Blimp : MonoBehaviour {
 		fireCooldown--;
 		FireInput(inputDevice.RightBumper || Input.GetMouseButton(0));
 		Stabilize ();
+		ItemInput (inputDevice.Action2, currItem);
+	}
+
+	void OnTriggerEnter(Collider col) {
+		if (col.gameObject.tag == "Item") {
+			currItem = col.gameObject.GetComponent<Item>().item;
+			Destroy(col.gameObject);
+		}
 	}
 
 	void Stabilize() {
-		Debug.Log (transform.rotation.z);
 		if (Mathf.Abs (transform.rotation.z) > 0.1)
 			rb.AddTorque (new Vector3(0, 0, transform.rotation.z * stabilizationScale));
 	}
