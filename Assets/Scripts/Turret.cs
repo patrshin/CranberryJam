@@ -14,7 +14,7 @@ public class Turret : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		var inputDevice = (playerNum == 1) ? InputManager.Devices[1]: InputManager.Devices[0];
-		Quaternion rotate = this.transform.rotation;
+		//Quaternion rotate = this.transform.rotation;
 		var max = Mathf.Abs (inputDevice.RightStickY);
 		if (Mathf.Abs (inputDevice.RightStickX) > Mathf.Abs (inputDevice.RightStickY )) {
 			max = Mathf.Abs (inputDevice.RightStickX);
