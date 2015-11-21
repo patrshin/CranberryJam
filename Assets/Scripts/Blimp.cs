@@ -12,24 +12,13 @@ public class Blimp : MonoBehaviour {
 	public int projectileCharge = 0;
 	public float projectileSpeed;
 	public float projectileOffset;
-
-	public string moveXAxis;
-	public string moveYAxis;
-	public string fireXAxis;
-	public string fireYAxis;
-	public string fireButton;
+	public float stabilizationScale;
 
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody>();
 	}
 
-	void MovementInput() {
-		float xd = Input.GetAxis(moveXAxis);
-		float yd = -Input.GetAxis(moveYAxis);
-		rb.AddForce(new Vector2(xd, yd) * movementSpeed);
-	}
-	
 	void FireInput(bool buttonPressed) {
 		if (buttonPressed) {
 			projectileCharge++;
@@ -55,5 +44,12 @@ public class Blimp : MonoBehaviour {
 		rb.AddForce(new Vector2(xd, yd) * movementSpeed);
 		fireCooldown--;
 		FireInput(inputDevice.RightBumper || Input.GetMouseButton(0));
+		Stabilize ();
+	}
+
+	void Stabilize() {
+		Debug.Log (transform.rotation.z);
+		if (Mathf.Abs (transform.rotation.z) > 0.1)
+			rb.AddTorque (new Vector3(0, 0, transform.rotation.z * stabilizationScale));
 	}
 }
