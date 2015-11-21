@@ -6,6 +6,7 @@ public class Blimp : MonoBehaviour {
 
 	Rigidbody rb;
 	public GameObject junk;
+	public GameObject Bucket;
 	public float movementSpeed;
 	public int playerNum;
 	int fireCooldown = 0;
@@ -15,6 +16,8 @@ public class Blimp : MonoBehaviour {
 	public float projectileOffset;
 	public float stabilizationScale;
 
+	private GameObject WeightBar;
+	public GameObject WeightBarPrefab;
 	private GameObject ChargeBar;
 	public GameObject ChargeBarPrefab;
 
@@ -22,14 +25,23 @@ public class Blimp : MonoBehaviour {
 	void Start () {
 		rb = GetComponent<Rigidbody>();
 		ChargeBar = (GameObject)Instantiate (ChargeBarPrefab);
+		WeightBar = (GameObject)Instantiate (WeightBarPrefab);
+
 		if (playerNum == 0) {
 			ChargeBar.GetComponent<ChargeGauge> ().pos = new Vector2 (220, 970);
+			WeightBar.GetComponent<ChargeGauge> ().pos = new Vector2 (220, 950);
 		} 
 		else {
 			ChargeBar.GetComponent<ChargeGauge> ().pos = new Vector2 (1500, 970);
+			WeightBar.GetComponent<ChargeGauge> ().pos = new Vector2 (1500, 950);
 		}
+		ChargeBar.GetComponent<ChargeGauge> ().color = Color.yellow;
 		ChargeBar.GetComponent<ChargeGauge> ().charge = projectileCharge;
 		ChargeBar.GetComponent<ChargeGauge> ().max = chargeCap;
+		WeightBar.GetComponent<ChargeGauge> ().color = Color.green;
+		WeightBar.GetComponent<ChargeGauge> ().charge = Bucket.GetComponent<Rigidbody>().mass;
+		WeightBar.GetComponent<ChargeGauge> ().max = 5;
+
 	}
 
 	void FireInput(bool buttonPressed) {
@@ -45,6 +57,7 @@ public class Blimp : MonoBehaviour {
 			//Physics.IgnoreCollision(projectile.GetComponent<Collider>(), GetComponent<Collider>());
 		}
 		ChargeBar.GetComponent<ChargeGauge> ().charge = projectileCharge;
+		WeightBar.GetComponent<ChargeGauge> ().charge = Bucket.GetComponent<Rigidbody>().mass;
 	}
 	
 	// Update is called once per frame

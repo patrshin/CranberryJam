@@ -10,6 +10,7 @@ public class ChargeGauge : MonoBehaviour {
 	public Texture2D fullTex;
 	public float charge; 
 	public float max;
+	public Color color;
 	
 	float native_width = 1920f;
 	float native_height = 1080f;
@@ -28,7 +29,7 @@ public class ChargeGauge : MonoBehaviour {
 		
 		GUI.BeginGroup(new Rect(pos.x, pos.y, size.x, size.y));
 		GUI.Box(new Rect(0,0, size.x, size.y), emptyTex);
-		GUI.color = Color.green;
+		GUI.color = color;
 		//draw the filled-in part:
 		GUI.BeginGroup(new Rect(0,0, size.x * barDisplay, size.y));
 		GUI.Box(new Rect(0,0, size.x, size.y), emptyTex, myStyle);
