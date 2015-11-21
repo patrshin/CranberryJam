@@ -34,11 +34,9 @@ public class Blimp : MonoBehaviour {
 		if(fire && fireCooldown < 1){
 			fireCooldown = 60;
 			Turret turret = this.gameObject.GetComponentInChildren<Turret>();
-			float xd = inputDevice.RightStickX;
-			float yd = inputDevice.RightStickY;
 			GameObject projectile = Instantiate(junk) as GameObject;
-			projectile.transform.position = transform.position + (turret.transform.forward * 0.5f);
-			projectile.GetComponent<Rigidbody>().AddForce(new Vector3(xd, yd, 0) * projectileSpeed);
+			projectile.transform.position = transform.position + (turret.transform.up * projectileOffset);
+			projectile.GetComponent<Rigidbody>().AddForce(turret.transform.up * projectileSpeed);
 			//Physics.IgnoreCollision(projectile.GetComponent<Collider>(), GetComponent<Collider>());
 		}
 	}
