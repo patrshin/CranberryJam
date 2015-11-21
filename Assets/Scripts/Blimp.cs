@@ -6,7 +6,6 @@ using InControl;
 public enum ItemType {
 	DUMP,
 	BOOST,
-	HEAVY,
 	NONE
 };
 
@@ -32,7 +31,7 @@ public class Blimp : MonoBehaviour {
 	private GameObject ItemStatus;
 	public GameObject ItemStatusPrefab;
 
-	private bool[] on = new bool[3];
+	private bool[] on = new bool[2];
 
 	private float boostTimer = 0f;
 	private float boostTimeLimit = 0.5f;
@@ -106,9 +105,6 @@ public class Blimp : MonoBehaviour {
 			if (currItem == ItemType.DUMP) {
 				on[1] = true;
 			}
-			if (currItem == ItemType.HEAVY) {
-				on[2] = true;
-			}
 			currItem = ItemType.NONE;
 		}
 		if (on [0] == true && boostTimer < boostTimeLimit) {
@@ -119,14 +115,19 @@ public class Blimp : MonoBehaviour {
 			on[0] = false;
 		}
 		if (on[1] == true) {
-			Bucket.GetComponent<Rigidbody>().mass -= 1f;
+			if (Bucket.GetComponent<Rigidbody>().mass-.5f < .25f) {
+				Bucket.GetComponent<Rigidbody>().mass = .25f;
+			}
+			else {
+				Bucket.GetComponent<Rigidbody>().mass -= .5f;
+			}
 			GameObject projectile = Instantiate(junk) as GameObject;
-			projectile.transform.position = new Vector3(Bucket.transform.position.x-0.5f, Bucket.transform.position.y-0.3f,0);
+			projectile.transform.position = new Vector3(Bucket.transform.position.x-0.65f, Bucket.transform.position.y+0.3f,0);
 			projectile.GetComponent<Rigidbody>().AddForce(projectileCharge * projectileSpeed * Vector3.right);
 			projectile.GetComponent<Rigidbody>().AddForce(projectileSpeed * Vector3.right * 2);
 			projectile.GetComponent<Rigidbody>().AddForce(projectileSpeed * Vector3.left * 2);
 			GameObject projectile1 = Instantiate(junk) as GameObject;
-			projectile1.transform.position = new Vector3(Bucket.transform.position.x+0.5f, Bucket.transform.position.y-0.3f,0);
+			projectile1.transform.position = new Vector3(Bucket.transform.position.x+0.65f, Bucket.transform.position.y+0.3f,0);
 			projectile1.GetComponent<Rigidbody>().AddForce(projectileCharge * projectileSpeed * Vector3.right);
 			projectile1.GetComponent<Rigidbody>().AddForce(projectileSpeed * Vector3.right * 2);
 			projectile1.GetComponent<Rigidbody>().AddForce(projectileSpeed * Vector3.left * 2);
