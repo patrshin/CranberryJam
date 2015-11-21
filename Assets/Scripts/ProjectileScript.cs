@@ -23,7 +23,7 @@ public class ProjectileScript : MonoBehaviour {
 		GameObject collidedWith = coll.gameObject;
 		if (collidedWith.tag == "BucketTop") {
 			GameObject bucket = collidedWith.transform.parent.gameObject;
-			bucket.GetComponent<Rigidbody>().mass += 10; 
+			bucket.GetComponent<Rigidbody>().mass += 0.2f; 
 			Destroy (this.gameObject);
 		}
 
