@@ -32,8 +32,16 @@ public class Blimp : MonoBehaviour {
 	private GameObject ItemStatus;
 	public GameObject ItemStatusPrefab;
 
+	private bool[] on = new bool[3];
+
+	private float boostTimer = 0f;
+	private float boostTimeLimit = 0.5f;
+
 	// Use this for initialization
 	void Start () {
+		for (int i = 0; i < on.Length; i++) {
+			on[0] = false;
+		}
 		rb = GetComponent<Rigidbody>();
 		ChargeBar = (GameObject)Instantiate (ChargeBarPrefab);
 		WeightBar = (GameObject)Instantiate (WeightBarPrefab);
@@ -77,19 +85,40 @@ public class Blimp : MonoBehaviour {
 		WeightBar.GetComponent<ChargeGauge> ().charge = Bucket.GetComponent<Rigidbody>().mass;
 	}
 
-	void ItemInput (bool trigger, ItemType item) {
+	void ItemInput (bool trigger, ItemType item, bool[] on) {
 		if (trigger) {
 			Debug.Log ("ITEM");
 			if (currItem == ItemType.BOOST) {
-
+				on[0] = true;
 			}
 			if (currItem == ItemType.DUMP) {
-				
+				on[1] = true;
 			}
 			if (currItem == ItemType.HEAVY) {
-				
+				on[2] = true;
 			}
 			currItem = ItemType.NONE;
+		}
+		if (on [0] == true && boostTimer < boostTimeLimit) {
+			boostTimer += Time.deltaTime;
+			rb.AddForce (new Vector2 (0f, 1f) * movementSpeed * 2f);
+		} else if (on[0] == true && boostTimer > boostTimeLimit) {
+			boostTimer = 0;
+			on[0] = false;
+		}
+		if (on[1] == true) {
+			Bucket.GetComponent<Rigidbody>().mass -= 1f;
+			GameObject projectile = Instantiate(junk) as GameObject;
+			projectile.transform.position = new Vector3(Bucket.transform.position.x-0.2f, Bucket.transform.position.y-0.5f,0);
+			projectile.GetComponent<Rigidbody>().AddForce(projectileCharge * projectileSpeed * Vector3.right);
+			projectile.GetComponent<Rigidbody>().AddForce(projectileSpeed * Vector3.right * 2);
+			projectile.GetComponent<Rigidbody>().AddForce(projectileSpeed * Vector3.left * 2);
+			GameObject projectile1 = Instantiate(junk) as GameObject;
+			projectile1.transform.position = new Vector3(Bucket.transform.position.x+0.3f, Bucket.transform.position.y-0.5f,0);
+			projectile1.GetComponent<Rigidbody>().AddForce(projectileCharge * projectileSpeed * Vector3.right);
+			projectile1.GetComponent<Rigidbody>().AddForce(projectileSpeed * Vector3.right * 2);
+			projectile1.GetComponent<Rigidbody>().AddForce(projectileSpeed * Vector3.left * 2);
+			on[1] = false;
 		}
 	}
 
@@ -105,7 +134,7 @@ public class Blimp : MonoBehaviour {
 		fireCooldown--;
 		FireInput(inputDevice.RightBumper || Input.GetMouseButton(0));
 		Stabilize ();
-		ItemInput (inputDevice.Action2, currItem);
+		ItemInput (inputDevice.Action2, currItem, on);
 	}
 
 	void OnTriggerEnter(Collider col) {
