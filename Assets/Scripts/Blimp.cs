@@ -13,12 +13,7 @@ public class Blimp : MonoBehaviour {
 	public float chargeCap;
 	public float projectileSpeed;
 	public float projectileOffset;
-
-	public string moveXAxis;
-	public string moveYAxis;
-	public string fireXAxis;
-	public string fireYAxis;
-	public string fireButton;
+	public float stabilizationScale;
 
 	private GameObject ChargeBar;
 	public GameObject ChargeBarPrefab;
@@ -37,12 +32,6 @@ public class Blimp : MonoBehaviour {
 		ChargeBar.GetComponent<ChargeGauge> ().max = chargeCap;
 	}
 
-	void MovementInput() {
-		float xd = Input.GetAxis(moveXAxis);
-		float yd = -Input.GetAxis(moveYAxis);
-		rb.AddForce(new Vector2(xd, yd) * movementSpeed);
-	}
-	
 	void FireInput(bool buttonPressed) {
 		if (buttonPressed && projectileCharge < chargeCap) {
 			projectileCharge++;
@@ -69,5 +58,12 @@ public class Blimp : MonoBehaviour {
 		rb.AddForce(new Vector2(xd, yd) * movementSpeed);
 		fireCooldown--;
 		FireInput(inputDevice.RightBumper || Input.GetMouseButton(0));
+		Stabilize ();
+	}
+
+	void Stabilize() {
+		Debug.Log (transform.rotation.z);
+		if (Mathf.Abs (transform.rotation.z) > 0.1)
+			rb.AddTorque (new Vector3(0, 0, transform.rotation.z * stabilizationScale));
 	}
 }
