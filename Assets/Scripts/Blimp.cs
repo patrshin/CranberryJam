@@ -28,13 +28,10 @@ public class Blimp : MonoBehaviour {
 		rb.AddForce(new Vector2(xd, yd) * movementSpeed);
 	}
 
-	void FireInput(bool fire) {
-		var inputDevice = (playerNum == 1) ? InputManager.Devices[1]: InputManager.Devices[0];
+	void FireInput(bool fire, float xd, float yd) {
 		if(fire && fireCooldown < 1){
 			fireCooldown = 60;
-			Transform turret = this.gameObject.transform.GetChild(0);
-			float xd = inputDevice.RightStickX;
-			float yd = inputDevice.RightStickY;
+			Transform turret = this.gameObject.transform.GetChild(0);;
 			GameObject projectile = Instantiate(junk) as GameObject;
 			float angle = turret.rotation.z;
 			Debug.Log(angle);
@@ -49,10 +46,13 @@ public class Blimp : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		var inputDevice = (playerNum == 1) ? InputManager.Devices[1]: InputManager.Devices[0];
+		if (inputDevice == null) {
+			Destroy(this.gameObject);
+		}
 		float xd = inputDevice.LeftStickX;
 		float yd = inputDevice.LeftStickY;
 		rb.AddForce(new Vector2(xd, yd) * movementSpeed);
 		fireCooldown--;
-		FireInput(inputDevice.Action1);
+		FireInput(inputDevice.Action1, xd, yd);
 	}
 }
