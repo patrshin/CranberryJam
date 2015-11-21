@@ -30,13 +30,13 @@ public class GameScript : MonoBehaviour {
 			Application.LoadLevel(2);
 		}
 		if (time > itemTimer) {
-			float randomX = (Random.value>.5f?-1:1)*Random.Range (0f,7f);
-			float randomY = (Random.value>.5f?-1:1)*Random.Range (0f,2f);
+			float randomX = (Random.value>.5f?-1:1)*Random.Range (0f,6f);
+			float randomY = (Random.value>.5f?-1:1)*Random.Range (0f,1.5f);
 			float distance1 = Vector3.Distance(new Vector3(randomX, randomY, 0), p1.transform.position);
 			float distance2 = Vector3.Distance(new Vector3(randomX, randomY, 0), p2.transform.position);
 			while (distance1 < maxDistance || distance2 < maxDistance) {
-				randomX = (Random.value>.5f?-1:1)*Random.Range (0f,7f);
-				randomY = (Random.value>.5f?-1:1)*Random.Range (0f,2f);
+				randomX = (Random.value>.5f?-1:1)*Random.Range (0f,6f);
+				randomY = (Random.value>.5f?-1:1)*Random.Range (0f,1.5f);
 				distance1 = Vector3.Distance(new Vector3(randomX, randomY, 0), p1.transform.position);
 				distance2 = Vector3.Distance(new Vector3(randomX, randomY, 0), p2.transform.position);
 			}
