@@ -14,7 +14,7 @@ public class ProjectileScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
-		if (viewportPos.y < 0)
+		if (viewportPos.y < -0.5f)
 			Destroy (this.gameObject);
 	}
 	
