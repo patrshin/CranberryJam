@@ -16,9 +16,11 @@ public class GameScript : MonoBehaviour {
 		Vector3 p1ViewportCoords = Camera.main.WorldToViewportPoint(p1.transform.position);
 		Vector3 p2ViewportCoords = Camera.main.WorldToViewportPoint(p2.transform.position);
 		if (p1ViewportCoords.y < 0) {
+			GameObject.Find ("PersistentData").GetComponent<PersistentData>().p2Wins ++;
 			Application.LoadLevel(2);
 		}
 		if (p2ViewportCoords.y < 0) {
+			GameObject.Find ("PersistentData").GetComponent<PersistentData>().p1Wins ++;
 			Application.LoadLevel(2);
 		}
 	}
