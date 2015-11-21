@@ -1,13 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Blimp.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\EECS494-F14-A2.2-ShinPatrick\Assets\Scripts\fuel.cs">
     <Files>
-      <File FileName="Assets\Scripts\Blimp.cs" Line="46" Column="21" />
-      <File FileName="Assets\Scripts\ProjectileScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\InControl\Editor\InputManagerAssetGenerator.cs" Line="1" Column="1" />
-      <File FileName="..\PlanetDefense\Assets\Scripts\Player\PlayerController.cs" Line="138" Column="24" />
+      <File FileName="..\PlanetDefense\Assets\Scripts\Player\PlayerController.cs" Line="20" Column="38" />
       <File FileName="Assets\InControl\Examples\Basic\CubeController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Turret.cs" Line="1" Column="1" />
+      <File FileName="..\PlanetDefense\Assets\inControl\Examples\CustomProfile\KeyboardAndMouseProfile.cs" Line="112" Column="6" />
+      <File FileName="Assets\Scripts\Blimp.cs" Line="29" Column="49" />
+      <File FileName="..\PlanetDefense\Assets\inControl\Examples\CustomProfile\CubeController.cs" Line="23" Column="47" />
+      <File FileName="..\..\EECS494-F14-A2.2-ShinPatrick\Assets\Scripts\player1.cs" Line="73" Column="26" />
+      <File FileName="..\..\EECS494-F14-A2.2-ShinPatrick\Assets\Scripts\fuel.cs" Line="4" Column="25" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
