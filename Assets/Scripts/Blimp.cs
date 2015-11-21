@@ -29,9 +29,8 @@ public class Blimp : MonoBehaviour {
 		float yd = -Input.GetAxis(moveYAxis);
 		rb.AddForce(new Vector2(xd, yd) * movementSpeed);
 	}
-
+	
 	void FireInput(bool buttonPressed) {
-		var inputDevice = (playerNum == 1) ? InputManager.Devices[1]: InputManager.Devices[0];
 		if (buttonPressed) {
 			projectileCharge++;
 		} else if(!buttonPressed && projectileCharge > 0 && fireCooldown < 1){
@@ -48,6 +47,9 @@ public class Blimp : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		var inputDevice = (playerNum == 1) ? InputManager.Devices[1]: InputManager.Devices[0];
+		if (inputDevice == null) {
+			Destroy(this.gameObject);
+		}
 		float xd = inputDevice.LeftStickX;
 		float yd = inputDevice.LeftStickY;
 		rb.AddForce(new Vector2(xd, yd) * movementSpeed);
