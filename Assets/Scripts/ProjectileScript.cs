@@ -13,7 +13,9 @@ public class ProjectileScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
+		if (viewportPos.y < 0)
+			Destroy (this.gameObject);
 	}
 	
 	public void SetVelocity(Vector3 direction, float speed) {
@@ -24,7 +26,7 @@ public class ProjectileScript : MonoBehaviour {
 		GameObject collidedWith = coll.gameObject;
 		if (collidedWith.tag == "BucketTop") {
 			GameObject bucket = collidedWith.transform.parent.gameObject;
-			bucket.GetComponent<Rigidbody>().mass += 10; 
+			bucket.GetComponent<Rigidbody>().mass += 0.2f; 
 			Destroy (this.gameObject);
 		}
 
