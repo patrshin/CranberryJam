@@ -57,6 +57,8 @@ public class Blimp : MonoBehaviour {
 			//Physics.IgnoreCollision(projectile.GetComponent<Collider>(), GetComponent<Collider>());
 		}
 		ChargeBar.GetComponent<ChargeGauge> ().charge = projectileCharge;
+		float WeightProportion = Bucket.GetComponent<Rigidbody> ().mass/5.0f;
+		WeightBar.GetComponent<ChargeGauge> ().color = Color.Lerp(Color.green, Color.red, WeightProportion);
 		WeightBar.GetComponent<ChargeGauge> ().charge = Bucket.GetComponent<Rigidbody>().mass;
 	}
 	
