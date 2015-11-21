@@ -10,6 +10,7 @@ public class Blimp : MonoBehaviour {
 	public int playerNum;
 	int fireCooldown = 0;
 	public int projectileCharge = 0;
+	public float chargeCap;
 	public float projectileSpeed;
 	public float projectileOffset;
 
@@ -19,9 +20,21 @@ public class Blimp : MonoBehaviour {
 	public string fireYAxis;
 	public string fireButton;
 
+	private GameObject ChargeBar;
+	public GameObject ChargeBarPrefab;
+
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody>();
+		ChargeBar = (GameObject)Instantiate (ChargeBarPrefab);
+		if (playerNum == 0) {
+			ChargeBar.GetComponent<ChargeGauge> ().pos = new Vector2 (220, 970);
+		} 
+		else {
+			ChargeBar.GetComponent<ChargeGauge> ().pos = new Vector2 (1500, 970);
+		}
+		ChargeBar.GetComponent<ChargeGauge> ().charge = projectileCharge;
+		ChargeBar.GetComponent<ChargeGauge> ().max = chargeCap;
 	}
 
 	void MovementInput() {
@@ -31,7 +44,7 @@ public class Blimp : MonoBehaviour {
 	}
 	
 	void FireInput(bool buttonPressed) {
-		if (buttonPressed) {
+		if (buttonPressed && projectileCharge < chargeCap) {
 			projectileCharge++;
 		} else if(!buttonPressed && projectileCharge > 0 && fireCooldown < 1){
 			fireCooldown = 15;
@@ -42,6 +55,7 @@ public class Blimp : MonoBehaviour {
 			projectileCharge = 0;
 			//Physics.IgnoreCollision(projectile.GetComponent<Collider>(), GetComponent<Collider>());
 		}
+		ChargeBar.GetComponent<ChargeGauge> ().charge = projectileCharge;
 	}
 	
 	// Update is called once per frame
