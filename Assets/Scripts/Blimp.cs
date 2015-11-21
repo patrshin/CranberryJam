@@ -41,6 +41,6 @@ public class Blimp : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		MovementInput();
-		//FireInput();
+		FireInput();
 	}
 }
