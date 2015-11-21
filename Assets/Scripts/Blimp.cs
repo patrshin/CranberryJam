@@ -10,6 +10,7 @@ public class Blimp : MonoBehaviour {
 	public int playerNum;
 	int fireCooldown = 0;
 	public float projectileSpeed;
+	public float projectileOffset;
 
 	public string moveXAxis;
 	public string moveYAxis;
@@ -31,15 +32,11 @@ public class Blimp : MonoBehaviour {
 	void FireInput(bool fire, float xd, float yd) {
 		if(fire && fireCooldown < 1){
 			fireCooldown = 60;
-			Transform turret = this.gameObject.transform.GetChild(0);;
+			Turret turret = this.gameObject.GetComponentInChildren<Turret>();
 			GameObject projectile = Instantiate(junk) as GameObject;
-			float angle = turret.rotation.z;
-			Debug.Log(angle);
-			projectile.transform.position = transform.position + new Vector3(0.5f * Mathf.Cos(angle), 0.5f * Mathf.Sin(angle),0);
-			//Rigidbody projRB = projectile.GetComponent<Rigidbody>();
-			Debug.Log (xd + ", " + yd);
-			projectile.GetComponent<Rigidbody>().AddForce(new Vector3(xd, yd, 0) * projectileSpeed);
-			Physics.IgnoreCollision(projectile.GetComponent<Collider>(), GetComponent<Collider>());
+			projectile.transform.position = transform.position + (turret.transform.up * projectileOffset);
+			projectile.GetComponent<Rigidbody>().AddForce(turret.transform.up * projectileSpeed);
+			//Physics.IgnoreCollision(projectile.GetComponent<Collider>(), GetComponent<Collider>());
 		}
 	}
 	
@@ -53,6 +50,6 @@ public class Blimp : MonoBehaviour {
 		float yd = inputDevice.LeftStickY;
 		rb.AddForce(new Vector2(xd, yd) * movementSpeed);
 		fireCooldown--;
-		FireInput(inputDevice.Action1, xd, yd);
+		FireInput(inputDevice.RightBumper, xd, yd);
 	}
 }

@@ -15,7 +15,6 @@ public class GameScript : MonoBehaviour {
 	void Update () {
 		Vector3 p1ViewportCoords = Camera.main.WorldToViewportPoint(p1.transform.position);
 		Vector3 p2ViewportCoords = Camera.main.WorldToViewportPoint(p2.transform.position);
-		Debug.Log (p1ViewportCoords);
 		if (p1ViewportCoords.y < 0) {
 			Application.LoadLevel(2);
 		}
