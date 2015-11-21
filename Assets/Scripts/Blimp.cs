@@ -76,7 +76,9 @@ public class Blimp : MonoBehaviour {
 			GameObject projectile = Instantiate(junk) as GameObject;
 			projectile.transform.position = transform.position + (turret.transform.up * projectileOffset);
 			projectile.GetComponent<Rigidbody>().AddForce(turret.transform.up * projectileCharge * projectileSpeed);
+			projectile.GetComponent<ProjectileScript>().totalCharge = projectileCharge;
 			projectileCharge = 0;
+			projectile.GetComponent<ProjectileScript>().chargeCap = chargeCap;
 			//Physics.IgnoreCollision(projectile.GetComponent<Collider>(), GetComponent<Collider>());
 		}
 		ChargeBar.GetComponent<ChargeGauge> ().charge = projectileCharge;
@@ -119,12 +121,12 @@ public class Blimp : MonoBehaviour {
 		if (on[1] == true) {
 			Bucket.GetComponent<Rigidbody>().mass -= 1f;
 			GameObject projectile = Instantiate(junk) as GameObject;
-			projectile.transform.position = new Vector3(Bucket.transform.position.x-0.2f, Bucket.transform.position.y-0.5f,0);
+			projectile.transform.position = new Vector3(Bucket.transform.position.x-0.5f, Bucket.transform.position.y-0.3f,0);
 			projectile.GetComponent<Rigidbody>().AddForce(projectileCharge * projectileSpeed * Vector3.right);
 			projectile.GetComponent<Rigidbody>().AddForce(projectileSpeed * Vector3.right * 2);
 			projectile.GetComponent<Rigidbody>().AddForce(projectileSpeed * Vector3.left * 2);
 			GameObject projectile1 = Instantiate(junk) as GameObject;
-			projectile1.transform.position = new Vector3(Bucket.transform.position.x+0.3f, Bucket.transform.position.y-0.5f,0);
+			projectile1.transform.position = new Vector3(Bucket.transform.position.x+0.5f, Bucket.transform.position.y-0.3f,0);
 			projectile1.GetComponent<Rigidbody>().AddForce(projectileCharge * projectileSpeed * Vector3.right);
 			projectile1.GetComponent<Rigidbody>().AddForce(projectileSpeed * Vector3.right * 2);
 			projectile1.GetComponent<Rigidbody>().AddForce(projectileSpeed * Vector3.left * 2);

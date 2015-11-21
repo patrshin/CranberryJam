@@ -2,14 +2,47 @@
 using System.Collections;
 
 public class ProjectileScript : MonoBehaviour {
-	
+
+	SpriteRenderer spr;
 	Rigidbody rb;
 	bool stuck = false;
+	public Sprite box,chair,meat,dog,sheep,knight,cannon;
+	public float totalCharge;
+	public float chargeCap;
 	
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody>();
 		GetComponent<AudioSource> ().Play ();
+		float strength = totalCharge / chargeCap;
+		float rand = Random.Range (0f, 1f);
+		Debug.Log (strength);
+		if (strength < 0.33f) {
+			rb.mass = 1f;
+			if (rand < 0.5) {
+				spr.sprite = box;
+			}
+			else {
+				spr.sprite = chair;
+			}
+		} else if (strength < 0.7f) {
+			rb.mass = 1.25f;
+			if (rand < 0.33) {
+				spr.sprite = meat;
+			}
+			else if (rand < 0.66) {
+				spr.sprite = sheep;
+			}
+			else {
+				spr.sprite = dog;
+			}
+		} else if (strength < 0.95f) {
+			rb.mass = 1.5f;
+			spr.sprite = knight;
+		} else {
+			rb.mass = 2f;
+			spr.sprite = cannon;
+		}
 	}
 	
 	// Update is called once per frame
@@ -25,10 +58,20 @@ public class ProjectileScript : MonoBehaviour {
 
 	void OnTriggerEnter(Collider coll) {
 		GameObject collidedWith = coll.gameObject;
+		float strength = totalCharge / chargeCap;
 		if (collidedWith.tag == "BucketTop") {
 			GameObject bucket = collidedWith.transform.parent.gameObject;
 			collidedWith.GetComponent<AudioSource>().Play ();
-			bucket.GetComponent<Rigidbody>().mass += 0.4f; 
+			if (strength < 0.33f)
+				bucket.GetComponent<Rigidbody>().mass += 0.3f; 
+			else if (strength < 0.7f)
+				bucket.GetComponent<Rigidbody>().mass += 0.5f; 
+			else if (strength < 0.95f){
+				bucket.GetComponent<Rigidbody>().mass += 0.8f; 
+			}
+			else {
+				bucket.GetComponent<Rigidbody>().mass += 1.25f; 
+			}
 			Destroy (this.gameObject);
 		}
 
