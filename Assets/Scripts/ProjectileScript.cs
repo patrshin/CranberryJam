@@ -27,6 +27,7 @@ public class ProjectileScript : MonoBehaviour {
 		GameObject collidedWith = coll.gameObject;
 		if (collidedWith.tag == "BucketTop") {
 			GameObject bucket = collidedWith.transform.parent.gameObject;
+			collidedWith.GetComponent<AudioSource>().Play ();
 			bucket.GetComponent<Rigidbody>().mass += 0.4f; 
 			Destroy (this.gameObject);
 		}
