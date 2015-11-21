@@ -23,11 +23,21 @@ public class GameScript : MonoBehaviour {
 		Vector3 p2ViewportCoords = Camera.main.WorldToViewportPoint(p2.transform.position);
 		if (p1ViewportCoords.y < 0) {
 			GameObject.Find ("PersistentData").GetComponent<PersistentData>().p2Wins ++;
-			Application.LoadLevel(2);
+			AudioSource explosion = p1.GetComponent<AudioSource>();
+			explosion.Play ();
+			AudioSource music = GetComponent<AudioSource>();
+			music.Stop ();
+			Destroy (p1);
+			Invoke ("TransitionToGameOver", 3.0f);
 		}
 		if (p2ViewportCoords.y < 0) {
 			GameObject.Find ("PersistentData").GetComponent<PersistentData>().p1Wins ++;
-			Application.LoadLevel(2);
+			AudioSource music = GetComponent<AudioSource>();
+			music.Stop ();
+			AudioSource explosion = p2.GetComponent<AudioSource>();
+			explosion.Play ();
+			Destroy (p2);
+			Invoke ("TransitionToGameOver", 3.0f);
 		}
 		if (time > itemTimer) {
 			float randomX = (Random.value>.5f?-1:1)*Random.Range (0f,7f);
@@ -45,5 +55,9 @@ public class GameScript : MonoBehaviour {
 			                                    randomY + transform.position.y, 0);
 			time = 0f;
 		}
+	}
+
+	void TransitionToGameOver() {
+		Application.LoadLevel(2);
 	}
 }

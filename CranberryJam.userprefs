@@ -1,13 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\EECS494-Proj1\Ghost n' Goblins\Assets\Scripts\Player\ItemUI.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Blimp.cs">
     <Files>
-      <File FileName="Assets\Scripts\Blimp.cs" Line="78" Column="5" />
-      <File FileName="Assets\Scripts\ProjectileScript.cs" Line="45" Column="1" />
-      <File FileName="..\..\EECS494-F14-A2.2-ShinPatrick\Assets\Scripts\fuel.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\GameScript.cs" Line="50" Column="1" />
-      <File FileName="Assets\Scripts\ChargeGauge.cs" Line="1" Column="1" />
-      <File FileName="..\EECS494-Proj1\Ghost n' Goblins\Assets\Scripts\Player\ItemUI.cs" Line="14" Column="2" />
+      <File FileName="Assets\Scripts\Blimp.cs" Line="114" Column="1" />
+      <File FileName="Assets\Scripts\ProjectileScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\InControl\Examples\Basic\CubeController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Turret.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GameScript.cs" Line="39" Column="17" />
+      <File FileName="Assets\Scripts\PersistentData.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
