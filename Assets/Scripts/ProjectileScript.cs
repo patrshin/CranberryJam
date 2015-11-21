@@ -30,5 +30,15 @@ public class ProjectileScript : MonoBehaviour {
 			Destroy (this.gameObject);
 		}
 
+		if (collidedWith.tag == "BucketBottom") {
+			GameObject bucket = collidedWith.transform.parent.gameObject;
+			//FixedJoint connection = new FixedJoint();
+			FixedJoint connection = bucket.AddComponent<FixedJoint>();//GetComponent<Rigidbody>()
+			connection.connectedBody = rb;
+			connection.breakForce = 100;
+			connection.breakTorque = 100;
+			//Destroy (this.gameObject);
+		}
+
 	}
 }
