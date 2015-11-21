@@ -15,7 +15,6 @@ public class Item : MonoBehaviour {
 			item = ItemType.HEAVY;
 		}
 		if (item == ItemType.DUMP) {
-			Debug.Log("DUMP");
 			gameObject.GetComponent<Renderer> ().material.color = Color.white;
 		}
 		if (item == ItemType.BOOST) {
