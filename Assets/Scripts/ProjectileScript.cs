@@ -18,4 +18,14 @@ public class ProjectileScript : MonoBehaviour {
 	public void SetVelocity(Vector3 direction, float speed) {
 		rb.AddForce(direction * speed);
 	}
+
+	void OnTriggerEnter(Collider coll) {
+		GameObject collidedWith = coll.gameObject;
+		if (collidedWith.tag == "BucketTop") {
+			GameObject bucket = collidedWith.transform.parent.gameObject;
+			bucket.GetComponent<Rigidbody>().mass += 10; 
+			Destroy (this.gameObject);
+		}
+
+	}
 }
