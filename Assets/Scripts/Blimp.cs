@@ -28,9 +28,9 @@ public class Blimp : MonoBehaviour {
 	void FireInput() {
 		bool fire = false;
 		if(playerNumber == 1) {
-			fire = Input.GetButton("Fire2");
+			fire = Input.GetButton("fire_p1");
 		} else if(playerNumber == 2) { 
-			fire = Input.GetButton("Fire1");
+			fire = Input.GetButton("fire_p2");
 		}
 		if(fire){
 			float xd = 0;
@@ -45,6 +45,7 @@ public class Blimp : MonoBehaviour {
 			GameObject projectile = Instantiate(junk) as GameObject;
 			projectile.transform.position = transform.position;
 			//Rigidbody projRB = projectile.GetComponent<Rigidbody>();
+			Debug.Log (xd + ", " + yd);
 			projectile.GetComponent<Rigidbody>().AddForce(xd, yd, 0);
 		}
 	}
@@ -52,6 +53,6 @@ public class Blimp : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		MovementInput();
-		FireInput();
+		//FireInput();
 	}
 }
