@@ -5,8 +5,13 @@ public class Blimp : MonoBehaviour {
 
 	Rigidbody rb;
 	public GameObject junk;
-	public int playerNumber;
 	public float movementSpeed;
+
+	public string moveXAxis;
+	public string moveYAxis;
+	public string fireXAxis;
+	public string fireYAxis;
+	public string fireButton;
 
 	// Use this for initialization
 	void Start () {
@@ -14,34 +19,17 @@ public class Blimp : MonoBehaviour {
 	}
 
 	void MovementInput() {
-		if(playerNumber == 1) {
-			float xd = Input.GetAxis("p1_x");
-			float yd = -Input.GetAxis("p1_y");
-			rb.AddForce(new Vector2(xd, yd) * movementSpeed);
-		} else if (playerNumber == 2) {
-			float xd = Input.GetAxis("p2_x");
-			float yd = -Input.GetAxis("p2_y");
-			rb.AddForce(new Vector2(xd, yd) * movementSpeed);
-		}
+		float xd = Input.GetAxis(moveXAxis);
+		float yd = -Input.GetAxis(moveYAxis);
+		rb.AddForce(new Vector2(xd, yd) * movementSpeed);
 	}
 
 	void FireInput() {
 		bool fire = false;
-		if(playerNumber == 1) {
-			fire = Input.GetButton("fire_p1");
-		} else if(playerNumber == 2) { 
-			fire = Input.GetButton("fire_p2");
-		}
+		fire = Input.GetButtonDown(fireButton); 
 		if(fire){
-			float xd = 0;
-			float yd = 0;
-			if(playerNumber == 1) {
-				xd = Input.GetAxis("p1_fire_x");
-				yd = -Input.GetAxis("p1_fire_y");
-			} else if (playerNumber == 2) {
-				xd = Input.GetAxis("p2_fire_x");
-				yd = -Input.GetAxis("p2_fire_y");
-			}
+			float xd = Input.GetAxis(fireXAxis);
+			float yd = -Input.GetAxis(fireYAxis);
 			GameObject projectile = Instantiate(junk) as GameObject;
 			projectile.transform.position = transform.position;
 			//Rigidbody projRB = projectile.GetComponent<Rigidbody>();
