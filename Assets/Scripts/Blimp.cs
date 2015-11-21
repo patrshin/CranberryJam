@@ -28,9 +28,9 @@ public class Blimp : MonoBehaviour {
 	void FireInput() {
 		bool fire = false;
 		if(playerNumber == 1) {
-
+			fire = Input.GetButton("Fire2");
 		} else if(playerNumber == 2) { 
-			
+			fire = Input.GetButton("Fire1");
 		}
 		if(fire){
 			float xd = 0;
@@ -42,11 +42,10 @@ public class Blimp : MonoBehaviour {
 				xd = Input.GetAxis("p2_fire_x");
 				yd = -Input.GetAxis("p2_fire_y");
 			}
-			var projectile = Instantiate(junk);
-			Vector3 projectilePos = new Vector3(transform.position.x, transform.position.y, 0);
-			projectile.transform.position = projectilePos();
+			GameObject projectile = Instantiate(junk) as GameObject;
+			projectile.transform.position = transform.position;
 			//Rigidbody projRB = projectile.GetComponent<Rigidbody>();
-			projectile.rigidbody.AddForce(xd, yd, 0);
+			projectile.GetComponent<Rigidbody>().AddForce(xd, yd, 0);
 		}
 	}
 	
