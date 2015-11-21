@@ -30,10 +30,13 @@ public class Blimp : MonoBehaviour {
 		bool fire = false;
 		fire = fired; 
 		if(fire){
+			Transform turret = this.gameObject.transform.GetChild(0);
 			float xd = Input.GetAxis(fireXAxis);
 			float yd = -Input.GetAxis(fireYAxis);
 			GameObject projectile = Instantiate(junk) as GameObject;
-			projectile.transform.position = transform.position;
+			float angle = turret.rotation.z;
+			Debug.Log(angle);
+			projectile.transform.position = transform.position + new Vector3(0.5f * Mathf.Cos(angle), 0.5f * Mathf.Sin(angle),0);
 			//Rigidbody projRB = projectile.GetComponent<Rigidbody>();
 			Debug.Log (xd + ", " + yd);
 			projectile.GetComponent<Rigidbody>().AddForce(xd, yd, 0);
