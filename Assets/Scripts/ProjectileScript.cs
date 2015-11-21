@@ -4,6 +4,7 @@ using System.Collections;
 public class ProjectileScript : MonoBehaviour {
 	
 	Rigidbody rb;
+	bool stuck = false;
 	
 	// Use this for initialization
 	void Start () {
@@ -30,8 +31,10 @@ public class ProjectileScript : MonoBehaviour {
 			Destroy (this.gameObject);
 		}
 
-		if (collidedWith.tag == "BucketBottom") {
+		if (collidedWith.tag == "BucketBottom"  && !stuck) {
+			stuck = true;
 			GameObject bucket = collidedWith.transform.parent.gameObject;
+			collidedWith.GetComponent<AudioSource>().Play ();
 			//FixedJoint connection = new FixedJoint();
 			FixedJoint connection = bucket.AddComponent<FixedJoint>();//GetComponent<Rigidbody>()
 			connection.connectedBody = rb;
@@ -40,5 +43,10 @@ public class ProjectileScript : MonoBehaviour {
 			//Destroy (this.gameObject);
 		}
 
+	}
+
+	void OnJoinBreak(float breakForce) {
+		stuck = false;
+		Debug.Log ("Unstuck!");
 	}
 }
