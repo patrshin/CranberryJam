@@ -80,7 +80,17 @@ public class Blimp : MonoBehaviour {
 			//Physics.IgnoreCollision(projectile.GetComponent<Collider>(), GetComponent<Collider>());
 		}
 		ChargeBar.GetComponent<ChargeGauge> ().charge = projectileCharge;
+		//calculate weight proportion
 		float WeightProportion = Bucket.GetComponent<Rigidbody> ().mass/5.0f;
+		//Change particle emission rate based on weight proportion
+		if (WeightProportion > 0.1f) {
+			ParticleSystem[] emitters = GetComponentsInChildren<ParticleSystem> ();
+			for (int i = 0; i < emitters.Length; i++) {
+				Debug.Log (emitters [i]);
+				emitters [i].emissionRate = 20 * WeightProportion;
+			}
+		}
+		//update weight bar with weight proportion
 		WeightBar.GetComponent<ChargeGauge> ().color = Color.Lerp(Color.green, Color.red, WeightProportion);
 		WeightBar.GetComponent<ChargeGauge> ().charge = Bucket.GetComponent<Rigidbody>().mass;
 	}
