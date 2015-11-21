@@ -29,21 +29,26 @@ public class Blimp : MonoBehaviour {
 	public GameObject WeightBarPrefab;
 	private GameObject ChargeBar;
 	public GameObject ChargeBarPrefab;
-	//private GameObject ItemStatus;
+	private GameObject ItemStatus;
+	public GameObject ItemStatusPrefab;
 
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody>();
 		ChargeBar = (GameObject)Instantiate (ChargeBarPrefab);
 		WeightBar = (GameObject)Instantiate (WeightBarPrefab);
+		ItemStatus = (GameObject)Instantiate (ItemStatusPrefab);
+		ItemStatus.GetComponent<ItemUI>().blimp = this.gameObject;
 
 		if (playerNum == 0) {
 			ChargeBar.GetComponent<ChargeGauge> ().pos = new Vector2 (220, 970);
 			WeightBar.GetComponent<ChargeGauge> ().pos = new Vector2 (220, 950);
+			ItemStatus.transform.position = new Vector3(-7.2f, -2.6f, -2.0f);
 		} 
 		else {
 			ChargeBar.GetComponent<ChargeGauge> ().pos = new Vector2 (1500, 970);
 			WeightBar.GetComponent<ChargeGauge> ().pos = new Vector2 (1500, 950);
+			ItemStatus.transform.position = new Vector3(7.2f,2.6f, -2.0f);
 		}
 		ChargeBar.GetComponent<ChargeGauge> ().color = Color.yellow;
 		ChargeBar.GetComponent<ChargeGauge> ().charge = projectileCharge;
@@ -74,16 +79,17 @@ public class Blimp : MonoBehaviour {
 
 	void ItemInput (bool trigger, ItemType item) {
 		if (trigger) {
-			if (item == ItemType.BOOST) {
+			Debug.Log ("ITEM");
+			if (currItem == ItemType.BOOST) {
 
 			}
-			if (item == ItemType.DUMP) {
+			if (currItem == ItemType.DUMP) {
 				
 			}
-			if (item == ItemType.HEAVY) {
+			if (currItem == ItemType.HEAVY) {
 				
 			}
-			item = ItemType.NONE;
+			currItem = ItemType.NONE;
 		}
 	}
 
