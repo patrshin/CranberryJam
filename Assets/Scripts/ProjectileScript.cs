@@ -8,7 +8,7 @@ public class ProjectileScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody>();
-		//rb.velocity = Vector3.forward;
+		GetComponent<AudioSource> ().Play ();
 	}
 	
 	// Update is called once per frame

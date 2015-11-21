@@ -3,8 +3,8 @@ using System.Collections;
 
 public class GameScript : MonoBehaviour {
 
-	public GameObject p1;
-	public GameObject p2;
+	public Blimp p1;
+	public Blimp p2;
 	public GameObject item;
 	public float maxDistance; 
 	float time = 0.0f;
@@ -29,6 +29,7 @@ public class GameScript : MonoBehaviour {
 				GameObject.Find ("PersistentData").GetComponent<PersistentData> ().p2Wins ++;
 				AudioSource explosion = p1.GetComponent<AudioSource> ();
 				explosion.Play ();
+				p1.Bucket.GetComponent<AudioSource>().Play ();
 				AudioSource music = GetComponent<AudioSource> ();
 				music.Stop ();
 				//Destroy (p1);
@@ -41,6 +42,7 @@ public class GameScript : MonoBehaviour {
 				AudioSource music = GetComponent<AudioSource> ();
 				music.Stop ();
 				AudioSource explosion = p2.GetComponent<AudioSource> ();
+				p2.Bucket.GetComponent<AudioSource>().Play ();
 				explosion.Play ();
 				p2.transform.position = new Vector3(-1000, -1000, 0);
 				//Destroy (p2);
