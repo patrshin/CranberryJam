@@ -31,9 +31,14 @@ public class Blimp : MonoBehaviour {
 	public GameObject ChargeBarPrefab;
 	private GameObject ItemStatus;
 	public GameObject ItemStatusPrefab;
+	private GameObject AbilityStatus;
+	public GameObject AbilityStatusPrefab;
 
 	private bool[] on = new bool[3];
+	private bool abilityOn = false;
 
+	private float boostCooldownTimer = 0f;
+	public float boostCooldown = 10f;
 	private float boostTimer = 0f;
 	public float boostTimeLimit = 0.5f;
 	private float cannonTimer = 0f;
@@ -50,16 +55,20 @@ public class Blimp : MonoBehaviour {
 		WeightBar = (GameObject)Instantiate (WeightBarPrefab);
 		ItemStatus = (GameObject)Instantiate (ItemStatusPrefab);
 		ItemStatus.GetComponent<ItemUI>().blimp = this.gameObject;
+		AbilityStatus = (GameObject)Instantiate (AbilityStatusPrefab);
+		AbilityStatus.GetComponent<AbilityUI>().blimp = this.gameObject;
 
 		if (playerNum == 0) {
-			ChargeBar.GetComponent<ChargeGauge> ().pos = new Vector2 (210, 990);
-			WeightBar.GetComponent<ChargeGauge> ().pos = new Vector2 (210, 950);
-			ItemStatus.transform.position = new Vector3(-6.5f, -2.3f, -2.0f);
+			ChargeBar.GetComponent<ChargeGauge> ().pos = new Vector2 (170, 990);
+			WeightBar.GetComponent<ChargeGauge> ().pos = new Vector2 (170, 950);
+			ItemStatus.transform.position = new Vector3(-6.5f, -2.4f, 0);
+			AbilityStatus.transform.position = new Vector3(-4.25f, -2.4f, 0);
 		} 
 		else {
-			ChargeBar.GetComponent<ChargeGauge> ().pos = new Vector2 (1490, 990);
-			WeightBar.GetComponent<ChargeGauge> ().pos = new Vector2 (1490, 950);
-			ItemStatus.transform.position = new Vector3(6.5f,2.3f, -2.0f);
+			ChargeBar.GetComponent<ChargeGauge> ().pos = new Vector2 (1550, 990);
+			WeightBar.GetComponent<ChargeGauge> ().pos = new Vector2 (1550, 950);
+			ItemStatus.transform.position = new Vector3(6.5f, -2.4f, 0);
+			AbilityStatus.transform.position = new Vector3(4.25f, -2.4f, 0);
 		}
 		ChargeBar.GetComponent<ChargeGauge> ().color = Color.yellow;
 		ChargeBar.GetComponent<ChargeGauge> ().charge = projectileCharge;
@@ -74,7 +83,7 @@ public class Blimp : MonoBehaviour {
 		if (buttonPressed && projectileCharge < chargeCap) {
 			projectileCharge++;
 		} else if(!buttonPressed && projectileCharge > 0 && fireCooldown < 1){
-			fireCooldown = 25;
+			fireCooldown = 15;
 			Turret turret = this.gameObject.GetComponentInChildren<Turret>();
 			GameObject projectile = Instantiate(junk) as GameObject;
 			projectile.transform.position = transform.position + (turret.transform.up * projectileOffset);
@@ -95,11 +104,11 @@ public class Blimp : MonoBehaviour {
 		//calculate weight proportion
 		float WeightProportion = Bucket.GetComponent<Rigidbody> ().mass/5.0f;
 		//Change particle emission rate based on weight proportion
-		if (WeightProportion > 0.15f) {
+		if (WeightProportion > 0.1f) {
 			ParticleSystem[] emitters = GetComponentsInChildren<ParticleSystem> ();
 			for (int i = 0; i < emitters.Length; i++) {
 				Debug.Log (emitters [i]);
-				emitters [i].emissionRate = 12 * WeightProportion;
+				emitters [i].emissionRate = 20 * WeightProportion;
 			}
 		}
 		//update weight bar with weight proportion
@@ -120,12 +129,7 @@ public class Blimp : MonoBehaviour {
 				on[2] = true;
 			}
 		}
-		if (on [0] == true && boostTimer < boostTimeLimit) {
-			boostTimer += Time.deltaTime;
-			rb.AddForce (new Vector2 (0f, 1f) * movementSpeed * 2f);
-		} else if (on[0] == true && boostTimer >= boostTimeLimit) {
-			boostTimer = 0;
-			on[0] = false;
+		if (on [0] == true) {
 			currItem = ItemType.NONE;
 		}
 		if (on[1] == true) {
@@ -159,6 +163,24 @@ public class Blimp : MonoBehaviour {
 		}
 	}
 
+	void AbilityInput (bool trigger, ItemType item, bool[] on) {
+		if (abilityOn == false && boostCooldownTimer < boostCooldown) {
+			boostCooldownTimer += Time.deltaTime;
+		}
+		if (trigger && boostCooldownTimer >= boostCooldown) {
+			abilityOn = true;
+		} 
+		if (abilityOn == true && boostTimer < boostTimeLimit) {
+			boostTimer += Time.deltaTime;
+			rb.AddForce (new Vector2 (0f, 1f) * movementSpeed * 2f);
+		} else if (abilityOn == true && boostTimer >= boostTimeLimit) {
+			boostTimer = 0;
+			abilityOn = false;
+			currItem = ItemType.NONE;
+			boostCooldownTimer = 0f;
+		} 
+	}
+	
 	// Update is called once per frame
 	void Update () {
 		var inputDevice = (playerNum == 1) ? InputManager.Devices[1]: InputManager.Devices[0];
@@ -171,7 +193,8 @@ public class Blimp : MonoBehaviour {
 		fireCooldown--;
 		FireInput(inputDevice.RightBumper || Input.GetMouseButton(0));
 		Stabilize ();
-		ItemInput (inputDevice.Action2, currItem, on);
+		ItemInput (inputDevice.LeftTrigger, currItem, on);
+		AbilityInput (inputDevice.RightTrigger, currItem, on);
 	}
 
 	void OnTriggerEnter(Collider col) {
