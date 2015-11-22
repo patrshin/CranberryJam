@@ -49,7 +49,7 @@ public class Blimp : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		for (int i = 0; i < on.Length; i++) {
-			on[0] = false;
+			on[i] = false;
 		}
 		rb = GetComponent<Rigidbody>();
 		ChargeBar = (GameObject)Instantiate (ChargeBarPrefab);
@@ -78,7 +78,11 @@ public class Blimp : MonoBehaviour {
 		WeightBar.GetComponent<ChargeGauge> ().color = Color.green;
 		WeightBar.GetComponent<ChargeGauge> ().charge = Bucket.GetComponent<Rigidbody>().mass;
 		WeightBar.GetComponent<ChargeGauge> ().max = 5;
-
+		foreach (Transform child in AbilityStatus.transform)  
+		{  
+			child.transform.Find("Image").GetComponent<Image>().fillAmount = 1;
+		}
+		
 	}
 
 	void FireInput(bool buttonPressed) {
@@ -119,7 +123,6 @@ public class Blimp : MonoBehaviour {
 
 	void ItemInput (bool trigger, ItemType item, bool[] on) {
 		if (trigger) {
-			Debug.Log ("ITEM");
 			if (currItem == ItemType.BOOST) {
 				on[0] = true;
 			}
@@ -164,24 +167,34 @@ public class Blimp : MonoBehaviour {
 		}
 	}
 
-	void AbilityInput (bool trigger, ItemType item, bool[] on) {
+	void AbilityInput (bool trigger) {
 		if (abilityOn == false && boostCooldownTimer < boostCooldown) {
 			boostCooldownTimer += Time.deltaTime;
-			AbilityStatus.transform.Find("Image").GetComponent<Image>().fillAmount += (boostCooldownTimer/boostCooldown);
+			foreach (Transform child in AbilityStatus.transform)  
+			{  
+				child.transform.Find("Image").GetComponent<Image>().fillAmount = ((boostCooldown-boostCooldownTimer)/boostCooldown);
+			}
 
 		}
 		if (trigger && boostCooldownTimer >= boostCooldown) {
 			abilityOn = true;
 		} 
 		if (abilityOn == true && boostTimer < boostTimeLimit) {
+			if (!AbilityStatus.GetComponent<AudioSource>().isPlaying) {
+				AbilityStatus.GetComponent<AudioSource>().Play(); 
+			}
 			boostTimer += Time.deltaTime;
 			rb.AddForce (new Vector2 (0f, 1f) * movementSpeed * 2f);
 		} else if (abilityOn == true && boostTimer >= boostTimeLimit) {
+			AbilityStatus.GetComponent<AudioSource>().Stop ();
 			boostTimer = 0;
 			abilityOn = false;
 			currItem = ItemType.NONE;
 			boostCooldownTimer = 0f;
-			AbilityStatus.transform.Find("Image").GetComponent<Image>().fillAmount = 0;
+			foreach (Transform child in AbilityStatus.transform)  
+			{  
+				child.transform.Find("Image").GetComponent<Image>().fillAmount = 1;
+			}
 		} 
 	}
 	
@@ -204,12 +217,17 @@ public class Blimp : MonoBehaviour {
 		FireInput(inputDevice.RightBumper || Input.GetMouseButton(0));
 		Stabilize ();
 		ItemInput (inputDevice.LeftTrigger, currItem, on);
-		AbilityInput (inputDevice.RightTrigger, currItem, on);
+		AbilityInput (inputDevice.RightTrigger);
 	}
 
 	void OnTriggerEnter(Collider col) {
 		if (col.gameObject.tag == "Item") {
 			currItem = col.gameObject.GetComponent<Item>().item;
+			for (int i = 0; i < on.Length; i++) {
+				on[i] = false;
+			}
+			cannonTimer = 0f;
+			cannonMode = 0f;
 			Destroy(col.gameObject);
 		}
 	}
