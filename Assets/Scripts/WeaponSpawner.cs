@@ -40,7 +40,7 @@ public class WeaponSpawner : MonoBehaviour {
 		GameObject projectile = Instantiate(junk) as GameObject;
 		projectile.GetComponent<AudioSource> ().volume = 0.5f;
 		projectile.transform.position = transform.position;
-		projectile.GetComponent<Rigidbody> ().AddForce (transform.up * Random.Range (100f, 400f));
+		projectile.GetComponent<Rigidbody> ().AddForce (transform.up * Random.Range (150f, 400f));
 		projectile.GetComponent<ProjectileScript>().totalCharge = Random.Range(0f,120f);
 		projectile.GetComponent<ProjectileScript>().chargeCap = Random.Range(0f,100f);
 	}

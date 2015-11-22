@@ -43,7 +43,7 @@ public class Blimp : MonoBehaviour {
 	private float boostTimer = 0f;
 	public float boostTimeLimit = 0.5f;
 	private float cannonTimer = 0f;
-	public float cannonTimeLimit = 5f;
+	public float cannonTimeLimit = 2f;
 	private float cannonMode = 0f;
 
 	// Use this for initialization
