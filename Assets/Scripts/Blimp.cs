@@ -61,14 +61,14 @@ public class Blimp : MonoBehaviour {
 
 
 		if (playerNum == 0) {
-			ChargeBar.GetComponent<ChargeGauge> ().pos = new Vector2 (170, 990);
-			WeightBar.GetComponent<ChargeGauge> ().pos = new Vector2 (170, 950);
+			//ChargeBar.GetComponent<ChargeGauge> ().pos = new Vector2 (170, 990);
+			//WeightBar.GetComponent<ChargeGauge> ().pos = new Vector2 (170, 950);
 			ItemStatus.transform.position = new Vector3(-6.5f, 2.4f, 0);
 			AbilityStatus.transform.position = new Vector3(-5.5f, 2.4f, 0);
 		} 
 		else {
-			ChargeBar.GetComponent<ChargeGauge> ().pos = new Vector2 (1550, 990);
-			WeightBar.GetComponent<ChargeGauge> ().pos = new Vector2 (1550, 950);
+			//ChargeBar.GetComponent<ChargeGauge> ().pos = new Vector2 (1550, 990);
+			//WeightBar.GetComponent<ChargeGauge> ().pos = new Vector2 (1550, 950);
 			ItemStatus.transform.position = new Vector3(6.5f, 2.4f, 0);
 			AbilityStatus.transform.position = new Vector3(5.5f, 2.4f, 0);
 		}
@@ -189,6 +189,13 @@ public class Blimp : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		var inputDevice = (playerNum == 1) ? InputManager.Devices[1]: InputManager.Devices[0];
+		Vector3 guiPos = transform.position;
+		guiPos.y *= -1;
+
+		WeightBar.GetComponent<ChargeGauge> ().pos = Camera.main.WorldToScreenPoint (guiPos + new Vector3(0, -0.65f, 0));
+		ChargeBar.GetComponent<ChargeGauge> ().pos = Camera.main.WorldToScreenPoint (guiPos + new Vector3(0, -0.45f, 0));
+		WeightBar.GetComponent<ChargeGauge>().pos.x -= WeightBar.GetComponent<ChargeGauge> ().size.x / 2;
+		ChargeBar.GetComponent<ChargeGauge>().pos.x -= ChargeBar.GetComponent<ChargeGauge> ().size.x / 2;
 		if (inputDevice == null) {
 			Destroy(this.gameObject);
 		}

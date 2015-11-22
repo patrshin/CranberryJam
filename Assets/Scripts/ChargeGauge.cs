@@ -5,7 +5,7 @@ public class ChargeGauge : MonoBehaviour {
 
 	public float barDisplay; //current progress
 	public Vector2 pos;
-	public Vector2 size = new Vector2(200f,30f);
+	public Vector2 size = new Vector2(120f,20f);
 	public Texture2D emptyTex;
 	public Texture2D fullTex;
 	public float charge; 
@@ -16,6 +16,8 @@ public class ChargeGauge : MonoBehaviour {
 	float native_height = 1080f;
 	
 	void OnGUI() {
+		native_width = Camera.main.pixelWidth;
+		native_height = Camera.main.pixelHeight;
 		GUIStyle myStyle = new GUIStyle(GUI.skin.box);
 		myStyle.normal.background = fullTex;
 		float rx = Screen.width / native_width;
