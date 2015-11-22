@@ -70,7 +70,7 @@ public class Blimp : MonoBehaviour {
 		if (buttonPressed && projectileCharge < chargeCap) {
 			projectileCharge++;
 		} else if(!buttonPressed && projectileCharge > 0 && fireCooldown < 1){
-			fireCooldown = 15;
+			fireCooldown = 25;
 			Turret turret = this.gameObject.GetComponentInChildren<Turret>();
 			GameObject projectile = Instantiate(junk) as GameObject;
 			projectile.transform.position = transform.position + (turret.transform.up * projectileOffset);
