@@ -10,11 +10,15 @@ public class GameScript : MonoBehaviour {
 	float time = 0.0f;
 	float itemTimer = 10f;
 	int itemCount = 0;
+	public Canvas WinUI;
+	PersistentData data;
 
 	bool gameOver = false;
 
 	// Use this for initialization
 	void Start () {
+		data = GameObject.Find ("PersistentData").GetComponent<PersistentData> ();
+		WinUI.GetComponent<WinUIScript>().UpdateWinUI (data.p1Wins, data.p2Wins);
 	}
 	
 	// Update is called once per frame
@@ -25,7 +29,7 @@ public class GameScript : MonoBehaviour {
 			Vector3 p2ViewportCoords = Camera.main.WorldToViewportPoint (p2.transform.position);
 			if (p1ViewportCoords.y < -0.1f) {
 				gameOver = true;
-				GameObject.Find ("PersistentData").GetComponent<PersistentData> ().p2Wins ++;
+				data.p2Wins ++;
 				AudioSource explosion = p1.GetComponent<AudioSource> ();
 				explosion.Play ();
 				p1.Bucket.GetComponent<AudioSource>().Play ();
@@ -37,7 +41,7 @@ public class GameScript : MonoBehaviour {
 			}
 			if (p2ViewportCoords.y < -0.1f) {
 				gameOver = true;
-				GameObject.Find ("PersistentData").GetComponent<PersistentData> ().p1Wins ++;
+				data.p1Wins ++;
 				AudioSource music = GetComponent<AudioSource> ();
 				music.Stop ();
 				AudioSource explosion = p2.GetComponent<AudioSource> ();
@@ -66,8 +70,7 @@ public class GameScript : MonoBehaviour {
 		}
 	}
 
-	void TransitionToGameOver() {
-		PersistentData data = GameObject.Find ("PersistentData").GetComponent<PersistentData>();
+	void TransitionToGameOver() {;
 		if (data.p1Wins >= data.numWins || data.p2Wins >= data.numWins) {
 			Application.LoadLevel (4);
 		} else {
