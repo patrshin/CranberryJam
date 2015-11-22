@@ -157,6 +157,7 @@
      <Compile Include="Assets\InControl\Test\TestInputManager.cs" />
      <Compile Include="Assets\Scripts\Blimp.cs" />
      <Compile Include="Assets\Scripts\ChargeGauge.cs" />
+     <Compile Include="Assets\Scripts\Cloud.cs" />
      <Compile Include="Assets\Scripts\GameScript.cs" />
      <Compile Include="Assets\Scripts\Ground.cs" />
      <Compile Include="Assets\Scripts\Item.cs" />
