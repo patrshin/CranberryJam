@@ -66,17 +66,22 @@ public class ProjectileScript : MonoBehaviour {
 		if (collidedWith.tag == "BucketTop") {
 			GameObject bucket = collidedWith.transform.parent.gameObject;
 			collidedWith.GetComponent<AudioSource>().Play ();
-			collidedWith.GetComponent<ParticleSystem>().Emit(10);
-			if (strength < 0.33f)
+			ParticleSystem particles = collidedWith.GetComponent<ParticleSystem>();
+			if (strength < 0.33f) {
+				particles.startColor = Color.white;
 				bucket.GetComponent<Rigidbody>().mass += 0.3f; 
-			else if (strength < 0.7f)
+			} else if (strength < 0.7f) {
+				particles.startColor = Color.yellow;
 				bucket.GetComponent<Rigidbody>().mass += 0.5f; 
-			else if (strength < 0.95f){
+			} else if (strength < 0.95f){
+				particles.startColor = new Color(0.5f, 0.25f, 0, 1);
 				bucket.GetComponent<Rigidbody>().mass += 0.8f; 
 			}
 			else {
+				particles.startColor = Color.red;
 				bucket.GetComponent<Rigidbody>().mass += 1.25f; 
 			}
+			particles.Emit(10);
 			Destroy (this.gameObject);
 		}
 
