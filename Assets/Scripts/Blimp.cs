@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using InControl;
 
@@ -58,17 +59,18 @@ public class Blimp : MonoBehaviour {
 		AbilityStatus = (GameObject)Instantiate (AbilityStatusPrefab);
 		AbilityStatus.GetComponent<AbilityUI>().blimp = this.gameObject;
 
+
 		if (playerNum == 0) {
 			ChargeBar.GetComponent<ChargeGauge> ().pos = new Vector2 (170, 990);
 			WeightBar.GetComponent<ChargeGauge> ().pos = new Vector2 (170, 950);
-			ItemStatus.transform.position = new Vector3(-6.5f, -2.4f, 0);
-			AbilityStatus.transform.position = new Vector3(-4.25f, -2.4f, 0);
+			ItemStatus.transform.position = new Vector3(-6.5f, 2.4f, 0);
+			AbilityStatus.transform.position = new Vector3(-5.5f, 2.4f, 0);
 		} 
 		else {
 			ChargeBar.GetComponent<ChargeGauge> ().pos = new Vector2 (1550, 990);
 			WeightBar.GetComponent<ChargeGauge> ().pos = new Vector2 (1550, 950);
-			ItemStatus.transform.position = new Vector3(6.5f, -2.4f, 0);
-			AbilityStatus.transform.position = new Vector3(4.25f, -2.4f, 0);
+			ItemStatus.transform.position = new Vector3(6.5f, 2.4f, 0);
+			AbilityStatus.transform.position = new Vector3(5.5f, 2.4f, 0);
 		}
 		ChargeBar.GetComponent<ChargeGauge> ().color = Color.yellow;
 		ChargeBar.GetComponent<ChargeGauge> ().charge = projectileCharge;
@@ -166,6 +168,8 @@ public class Blimp : MonoBehaviour {
 	void AbilityInput (bool trigger, ItemType item, bool[] on) {
 		if (abilityOn == false && boostCooldownTimer < boostCooldown) {
 			boostCooldownTimer += Time.deltaTime;
+			AbilityStatus.transform.Find("Image").GetComponent<Image>().fillAmount += (boostCooldownTimer/boostCooldown);
+
 		}
 		if (trigger && boostCooldownTimer >= boostCooldown) {
 			abilityOn = true;
@@ -178,6 +182,7 @@ public class Blimp : MonoBehaviour {
 			abilityOn = false;
 			currItem = ItemType.NONE;
 			boostCooldownTimer = 0f;
+			AbilityStatus.transform.Find("Image").GetComponent<Image>().fillAmount = 0;
 		} 
 	}
 	
