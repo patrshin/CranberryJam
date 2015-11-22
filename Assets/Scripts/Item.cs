@@ -8,8 +8,8 @@ public class Item : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		float rand = Random.Range (0f, 1.0F) + offset;;
-		if (rand < 0.5) {
-			item = ItemType.BOOST;
+		if (rand < 0.3) {
+			item = ItemType.CANNON;
 		} else {
 			item = ItemType.DUMP;
 		} 
@@ -18,6 +18,8 @@ public class Item : MonoBehaviour {
 		}
 		if (item == ItemType.BOOST) {
 			gameObject.GetComponent<Renderer> ().material.color = Color.green;
+		}	if (item == ItemType.CANNON) {
+			gameObject.GetComponent<Renderer> ().material.color = Color.red;
 		}
 	}
 	

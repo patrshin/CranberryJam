@@ -5,7 +5,7 @@ public class ChargeGauge : MonoBehaviour {
 
 	public float barDisplay; //current progress
 	public Vector2 pos;
-	public Vector2 size = new Vector2(200,15);
+	public Vector2 size = new Vector2(200,20);
 	public Texture2D emptyTex;
 	public Texture2D fullTex;
 	public float charge; 

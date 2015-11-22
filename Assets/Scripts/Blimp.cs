@@ -6,6 +6,7 @@ using InControl;
 public enum ItemType {
 	DUMP,
 	BOOST,
+	CANNON,
 	NONE
 };
 
@@ -31,10 +32,13 @@ public class Blimp : MonoBehaviour {
 	private GameObject ItemStatus;
 	public GameObject ItemStatusPrefab;
 
-	private bool[] on = new bool[2];
+	private bool[] on = new bool[3];
 
 	private float boostTimer = 0f;
-	private float boostTimeLimit = 0.5f;
+	public float boostTimeLimit = 0.5f;
+	private float cannonTimer = 0f;
+	public float cannonTimeLimit = 5f;
+	private float cannonMode = 0f;
 
 	// Use this for initialization
 	void Start () {
@@ -48,14 +52,14 @@ public class Blimp : MonoBehaviour {
 		ItemStatus.GetComponent<ItemUI>().blimp = this.gameObject;
 
 		if (playerNum == 0) {
-			ChargeBar.GetComponent<ChargeGauge> ().pos = new Vector2 (220, 970);
-			WeightBar.GetComponent<ChargeGauge> ().pos = new Vector2 (220, 950);
-			ItemStatus.transform.position = new Vector3(-7.2f, -2.6f, -2.0f);
+			ChargeBar.GetComponent<ChargeGauge> ().pos = new Vector2 (210, 990);
+			WeightBar.GetComponent<ChargeGauge> ().pos = new Vector2 (210, 950);
+			ItemStatus.transform.position = new Vector3(-6.5f, -2.3f, -2.0f);
 		} 
 		else {
-			ChargeBar.GetComponent<ChargeGauge> ().pos = new Vector2 (1500, 970);
-			WeightBar.GetComponent<ChargeGauge> ().pos = new Vector2 (1500, 950);
-			ItemStatus.transform.position = new Vector3(7.2f,2.6f, -2.0f);
+			ChargeBar.GetComponent<ChargeGauge> ().pos = new Vector2 (1490, 990);
+			WeightBar.GetComponent<ChargeGauge> ().pos = new Vector2 (1490, 950);
+			ItemStatus.transform.position = new Vector3(6.5f,2.3f, -2.0f);
 		}
 		ChargeBar.GetComponent<ChargeGauge> ().color = Color.yellow;
 		ChargeBar.GetComponent<ChargeGauge> ().charge = projectileCharge;
@@ -74,8 +78,15 @@ public class Blimp : MonoBehaviour {
 			Turret turret = this.gameObject.GetComponentInChildren<Turret>();
 			GameObject projectile = Instantiate(junk) as GameObject;
 			projectile.transform.position = transform.position + (turret.transform.up * projectileOffset);
-			projectile.GetComponent<Rigidbody>().AddForce(turret.transform.up * projectileCharge * projectileSpeed);
-			projectile.GetComponent<ProjectileScript>().totalCharge = projectileCharge;
+			Debug.Log(cannonMode);
+			if (cannonMode == 1.0f) {
+				projectile.GetComponent<Rigidbody>().AddForce(turret.transform.up * chargeCap * projectileSpeed);
+				projectile.GetComponent<ProjectileScript>().totalCharge = chargeCap;
+			}
+			else {
+				projectile.GetComponent<Rigidbody>().AddForce(turret.transform.up * projectileCharge * projectileSpeed);
+				projectile.GetComponent<ProjectileScript>().totalCharge = projectileCharge;
+			}
 			projectileCharge = 0;
 			projectile.GetComponent<ProjectileScript>().chargeCap = chargeCap;
 			//Physics.IgnoreCollision(projectile.GetComponent<Collider>(), GetComponent<Collider>());
@@ -105,14 +116,17 @@ public class Blimp : MonoBehaviour {
 			if (currItem == ItemType.DUMP) {
 				on[1] = true;
 			}
-			currItem = ItemType.NONE;
+			if (currItem == ItemType.CANNON) {
+				on[2] = true;
+			}
 		}
 		if (on [0] == true && boostTimer < boostTimeLimit) {
 			boostTimer += Time.deltaTime;
 			rb.AddForce (new Vector2 (0f, 1f) * movementSpeed * 2f);
-		} else if (on[0] == true && boostTimer > boostTimeLimit) {
+		} else if (on[0] == true && boostTimer >= boostTimeLimit) {
 			boostTimer = 0;
 			on[0] = false;
+			currItem = ItemType.NONE;
 		}
 		if (on[1] == true) {
 			if (Bucket.GetComponent<Rigidbody>().mass-.5f < .25f) {
@@ -123,15 +137,25 @@ public class Blimp : MonoBehaviour {
 			}
 			GameObject projectile = Instantiate(junk) as GameObject;
 			projectile.transform.position = new Vector3(Bucket.transform.position.x-0.65f, Bucket.transform.position.y+0.3f,0);
-			projectile.GetComponent<Rigidbody>().AddForce(projectileCharge * projectileSpeed * Vector3.right);
-			projectile.GetComponent<Rigidbody>().AddForce(projectileSpeed * Vector3.right * 2);
-			projectile.GetComponent<Rigidbody>().AddForce(projectileSpeed * Vector3.left * 2);
+			projectile.GetComponent<Rigidbody>().AddForce(projectileSpeed * Vector3.left*2f);
+			projectile.GetComponent<ProjectileScript>().chargeCap = 10f;
+			projectile.GetComponent<ProjectileScript>().off = 0f;
 			GameObject projectile1 = Instantiate(junk) as GameObject;
 			projectile1.transform.position = new Vector3(Bucket.transform.position.x+0.65f, Bucket.transform.position.y+0.3f,0);
-			projectile1.GetComponent<Rigidbody>().AddForce(projectileCharge * projectileSpeed * Vector3.right);
-			projectile1.GetComponent<Rigidbody>().AddForce(projectileSpeed * Vector3.right * 2);
-			projectile1.GetComponent<Rigidbody>().AddForce(projectileSpeed * Vector3.left * 2);
+			projectile1.GetComponent<ProjectileScript>().chargeCap = 10f;
+			projectile1.GetComponent<ProjectileScript>().off = 0f;
+			projectile1.GetComponent<Rigidbody>().AddForce(projectileSpeed * Vector3.right*2f);
 			on[1] = false;
+			currItem = ItemType.NONE;
+		}
+		if (on [2] == true && cannonTimer < cannonTimeLimit) {
+			cannonTimer += Time.deltaTime;
+			cannonMode = 1.0f;
+		} else if (on[2] == true && cannonTimer >= cannonTimeLimit) {
+			cannonMode = 0.0f;
+			cannonTimer = 0;
+			on[2] = false;
+			currItem = ItemType.NONE;
 		}
 	}
 

@@ -9,6 +9,7 @@ public class ProjectileScript : MonoBehaviour {
 	public Sprite box,chair,meat,dog,sheep,knight,cannon;
 	public float totalCharge;
 	public float chargeCap;
+	public float off;
 	
 	// Use this for initialization
 	void Start () {
@@ -16,8 +17,7 @@ public class ProjectileScript : MonoBehaviour {
 		rb = GetComponent<Rigidbody>();
 		GetComponent<AudioSource> ().Play ();
 		float strength = totalCharge / chargeCap;
-		float rand = Random.Range (0f, 1f);
-		Debug.Log (strength);
+		float rand = Random.Range (0f, 1f) + off;
 		if (strength < 0.33f) {
 			rb.mass = 1f;
 			if (rand < 0.5f) {

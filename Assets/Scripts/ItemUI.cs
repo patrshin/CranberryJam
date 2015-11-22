@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ItemUI : MonoBehaviour {
 	SpriteRenderer spr;
-	public Sprite none, dump, boost, heavy; 
+	public Sprite none, dump, boost, cannon; 
 	public GameObject blimp; 
 
 	void Start () {
@@ -12,11 +12,13 @@ public class ItemUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		if (blimp.GetComponent<Blimp>().currItem == ItemType.BOOST) {
+		if (blimp.GetComponent<Blimp> ().currItem == ItemType.BOOST) {
 			spr.sprite = boost;
-		} else if (blimp.GetComponent<Blimp>().currItem == ItemType.DUMP) {
+		} else if (blimp.GetComponent<Blimp> ().currItem == ItemType.DUMP) {
 			spr.sprite = dump;
-		} else if (blimp.GetComponent<Blimp>().currItem == ItemType.NONE) {
+		} else if (blimp.GetComponent<Blimp> ().currItem == ItemType.CANNON) {
+			spr.sprite = cannon;
+		} else {
 			spr.sprite = none;
 		}
 	}
