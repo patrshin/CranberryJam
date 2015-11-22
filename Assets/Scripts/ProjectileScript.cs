@@ -11,12 +11,13 @@ public class ProjectileScript : MonoBehaviour {
 	public float totalCharge;
 	public float chargeCap;
 	public float off;
+	public bool noise = true;
 	
 	// Use this for initialization
 	void Start () {
 		spr = GetComponent<SpriteRenderer>();
 		rb = GetComponent<Rigidbody>();
-		GetComponent<AudioSource> ().Play ();
+		if (noise) GetComponent<AudioSource> ().Play ();
 		float strength = totalCharge / chargeCap;
 		AudioSource audio = GetComponent<AudioSource>();
 		float rand = Random.Range (0f, 1f) + off;
@@ -37,17 +38,17 @@ public class ProjectileScript : MonoBehaviour {
 				spr.sprite = sheep;
 			}
 			else {
-				audio.PlayOneShot(bark);
+				if (noise) audio.PlayOneShot(bark);
 				spr.sprite = dog;
 			}
 		} else if (strength < 0.95f) {
 			rb.mass = 1.5f;
 			spr.sprite = knight;
-			audio.PlayOneShot(clang);
+			if (noise) audio.PlayOneShot(clang);
 		} else {
 			rb.mass = 2f;
 			spr.sprite = cannon;
-			audio.PlayOneShot(volley);
+			if (noise) audio.PlayOneShot(volley);
 		}
 	}
 	
