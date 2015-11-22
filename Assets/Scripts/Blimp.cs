@@ -106,11 +106,11 @@ public class Blimp : MonoBehaviour {
 		//calculate weight proportion
 		float WeightProportion = Bucket.GetComponent<Rigidbody> ().mass/5.0f;
 		//Change particle emission rate based on weight proportion
-		if (WeightProportion > 0.1f) {
+		if (WeightProportion > 0.5f) {
 			ParticleSystem[] emitters = GetComponentsInChildren<ParticleSystem> ();
 			for (int i = 0; i < emitters.Length; i++) {
 				Debug.Log (emitters [i]);
-				emitters [i].emissionRate = 20 * WeightProportion;
+				emitters [i].emissionRate = 20 * (WeightProportion - 0.5f); 
 			}
 		}
 		//update weight bar with weight proportion
@@ -191,9 +191,8 @@ public class Blimp : MonoBehaviour {
 		var inputDevice = (playerNum == 1) ? InputManager.Devices[1]: InputManager.Devices[0];
 		Vector3 guiPos = transform.position;
 		guiPos.y *= -1;
-
-		WeightBar.GetComponent<ChargeGauge> ().pos = Camera.main.WorldToScreenPoint (guiPos + new Vector3(0, -0.65f, 0));
-		ChargeBar.GetComponent<ChargeGauge> ().pos = Camera.main.WorldToScreenPoint (guiPos + new Vector3(0, -0.45f, 0));
+		WeightBar.GetComponent<ChargeGauge> ().pos = Camera.main.WorldToScreenPoint (guiPos + new Vector3(0, -0.75f, 0));
+		ChargeBar.GetComponent<ChargeGauge> ().pos = Camera.main.WorldToScreenPoint (guiPos + new Vector3(0, -0.55f, 0));
 		WeightBar.GetComponent<ChargeGauge>().pos.x -= WeightBar.GetComponent<ChargeGauge> ().size.x / 2;
 		ChargeBar.GetComponent<ChargeGauge>().pos.x -= ChargeBar.GetComponent<ChargeGauge> ().size.x / 2;
 		if (inputDevice == null) {
