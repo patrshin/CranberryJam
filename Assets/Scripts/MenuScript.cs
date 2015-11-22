@@ -20,8 +20,16 @@ public class MenuScript : MonoBehaviour {
 		}
 	}
 
-	public void StartGame() {
+	public void LoadLevel1() {
 		Application.LoadLevel (1);
+	}
+
+	public void LoadLevel2() {
+		Application.LoadLevel (2);
+	}
+
+	public void LoadLevel3() {
+		Application.LoadLevel (3);
 	}
 
 	public void BackToMenu() {

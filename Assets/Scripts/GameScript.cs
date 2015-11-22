@@ -68,6 +68,6 @@ public class GameScript : MonoBehaviour {
 	}
 
 	void TransitionToGameOver() {
-		Application.LoadLevel(2);
+		Application.LoadLevel(4);
 	}
 }
