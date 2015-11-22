@@ -33,7 +33,7 @@ public class MenuScript : MonoBehaviour {
 	}
 
 	public void BackToMenu() {
-		GameObject.Find ("PersistentData").GetComponent<PersistentData>().ClearMatchData ();
+		Destroy (GameObject.Find ("PersistentData"));
 		Application.LoadLevel (0);
 	}
 
