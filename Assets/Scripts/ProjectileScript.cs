@@ -19,7 +19,8 @@ public class ProjectileScript : MonoBehaviour {
 		Debug.Log (strength);
 		if (strength < 0.33f) {
 			rb.mass = 1f;
-			if (rand < 0.5) {
+			if (rand < 0.5f) {
+				Debug.Log("BOX");
 				spr.sprite = box;
 			}
 			else {
@@ -27,10 +28,10 @@ public class ProjectileScript : MonoBehaviour {
 			}
 		} else if (strength < 0.7f) {
 			rb.mass = 1.25f;
-			if (rand < 0.33) {
+			if (rand < 0.33f) {
 				spr.sprite = meat;
 			}
-			else if (rand < 0.66) {
+			else if (rand < 0.66f) {
 				spr.sprite = sheep;
 			}
 			else {
