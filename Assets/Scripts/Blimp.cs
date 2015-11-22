@@ -213,7 +213,7 @@ public class Blimp : MonoBehaviour {
 		float yd = inputDevice.LeftStickY;
 		rb.AddForce(new Vector2(xd, yd) * movementSpeed);
 		fireCooldown--;
-		FireInput(inputDevice.RightBumper || Input.GetMouseButton(0));
+		FireInput(inputDevice.RightBumper);
 		Stabilize ();
 		ItemInput (inputDevice.LeftTrigger, currItem, on);
 		AbilityInput (inputDevice.RightTrigger);
