@@ -1,11 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Blimp.cs">
     <Files>
       <File FileName="Assets\Scripts\AbilityUI.cs" Line="11" Column="2" />
-      <File FileName="Assets\Scripts\Blimp.cs" Line="66" Column="5" />
-      <File FileName="Assets\Scripts\ItemUI.cs" Line="10" Column="17" />
-      <File FileName="Assets\Scripts\ChargeGauge.cs" Line="6" Column="31" />
+      <File FileName="Assets\Scripts\Blimp.cs" Line="212" Column="1" />
+      <File FileName="Assets\Scripts\ItemUI.cs" Line="25" Column="1" />
+      <File FileName="Assets\Scripts\ChargeGauge.cs" Line="45" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
