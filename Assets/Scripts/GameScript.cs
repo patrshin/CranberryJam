@@ -15,7 +15,6 @@ public class GameScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
 	}
 	
 	// Update is called once per frame
@@ -68,6 +67,11 @@ public class GameScript : MonoBehaviour {
 	}
 
 	void TransitionToGameOver() {
-		Application.LoadLevel(4);
+		PersistentData data = GameObject.Find ("PersistentData").GetComponent<PersistentData>();
+		if (data.p1Wins >= data.numWins || data.p2Wins >= data.numWins) {
+			Application.LoadLevel (4);
+		} else {
+			Application.LoadLevel (Application.loadedLevel);
+		}
 	}
 }
