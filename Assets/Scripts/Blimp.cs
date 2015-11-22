@@ -74,7 +74,7 @@ public class Blimp : MonoBehaviour {
 		if (buttonPressed && projectileCharge < chargeCap) {
 			projectileCharge++;
 		} else if(!buttonPressed && projectileCharge > 0 && fireCooldown < 1){
-			fireCooldown = 15;
+			fireCooldown = 25;
 			Turret turret = this.gameObject.GetComponentInChildren<Turret>();
 			GameObject projectile = Instantiate(junk) as GameObject;
 			projectile.transform.position = transform.position + (turret.transform.up * projectileOffset);
@@ -95,11 +95,11 @@ public class Blimp : MonoBehaviour {
 		//calculate weight proportion
 		float WeightProportion = Bucket.GetComponent<Rigidbody> ().mass/5.0f;
 		//Change particle emission rate based on weight proportion
-		if (WeightProportion > 0.1f) {
+		if (WeightProportion > 0.15f) {
 			ParticleSystem[] emitters = GetComponentsInChildren<ParticleSystem> ();
 			for (int i = 0; i < emitters.Length; i++) {
 				Debug.Log (emitters [i]);
-				emitters [i].emissionRate = 20 * WeightProportion;
+				emitters [i].emissionRate = 12 * WeightProportion;
 			}
 		}
 		//update weight bar with weight proportion

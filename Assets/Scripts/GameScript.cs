@@ -24,7 +24,7 @@ public class GameScript : MonoBehaviour {
 		if (!gameOver) {
 			Vector3 p1ViewportCoords = Camera.main.WorldToViewportPoint (p1.transform.position);
 			Vector3 p2ViewportCoords = Camera.main.WorldToViewportPoint (p2.transform.position);
-			if (p1ViewportCoords.y < 0) {
+			if (p1ViewportCoords.y < -0.1f) {
 				gameOver = true;
 				GameObject.Find ("PersistentData").GetComponent<PersistentData> ().p2Wins ++;
 				AudioSource explosion = p1.GetComponent<AudioSource> ();
@@ -36,7 +36,7 @@ public class GameScript : MonoBehaviour {
 				p1.transform.position = new Vector3(-1000, -1000, 0);
 				Invoke ("TransitionToGameOver", 3.0f);
 			}
-			if (p2ViewportCoords.y < 0) {
+			if (p2ViewportCoords.y < -0.1f) {
 				gameOver = true;
 				GameObject.Find ("PersistentData").GetComponent<PersistentData> ().p1Wins ++;
 				AudioSource music = GetComponent<AudioSource> ();
@@ -68,6 +68,6 @@ public class GameScript : MonoBehaviour {
 	}
 
 	void TransitionToGameOver() {
-		Application.LoadLevel(2);
+		Application.LoadLevel(4);
 	}
 }

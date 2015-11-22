@@ -6,6 +6,7 @@ public class ProjectileScript : MonoBehaviour {
 	SpriteRenderer spr;
 	Rigidbody rb;
 	bool stuck = false;
+	public AudioClip bark;
 	public Sprite box,chair,meat,dog,sheep,knight,cannon;
 	public float totalCharge;
 	public float chargeCap;
@@ -35,6 +36,8 @@ public class ProjectileScript : MonoBehaviour {
 				spr.sprite = sheep;
 			}
 			else {
+				AudioSource audio = GetComponent<AudioSource>();
+				audio.PlayOneShot(bark);
 				spr.sprite = dog;
 			}
 		} else if (strength < 0.95f) {
