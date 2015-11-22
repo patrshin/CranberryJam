@@ -12,6 +12,7 @@ public class ProjectileScript : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		spr = GetComponent<SpriteRenderer>();
 		rb = GetComponent<Rigidbody>();
 		GetComponent<AudioSource> ().Play ();
 		float strength = totalCharge / chargeCap;
@@ -20,7 +21,6 @@ public class ProjectileScript : MonoBehaviour {
 		if (strength < 0.33f) {
 			rb.mass = 1f;
 			if (rand < 0.5f) {
-				Debug.Log("BOX");
 				spr.sprite = box;
 			}
 			else {
