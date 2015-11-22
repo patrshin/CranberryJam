@@ -66,6 +66,7 @@ public class ProjectileScript : MonoBehaviour {
 		if (collidedWith.tag == "BucketTop") {
 			GameObject bucket = collidedWith.transform.parent.gameObject;
 			collidedWith.GetComponent<AudioSource>().Play ();
+			collidedWith.GetComponent<ParticleSystem>().Emit(10);
 			if (strength < 0.33f)
 				bucket.GetComponent<Rigidbody>().mass += 0.3f; 
 			else if (strength < 0.7f)

@@ -109,7 +109,6 @@ public class Blimp : MonoBehaviour {
 		if (WeightProportion > 0.5f) {
 			ParticleSystem[] emitters = GetComponentsInChildren<ParticleSystem> ();
 			for (int i = 0; i < emitters.Length; i++) {
-				Debug.Log (emitters [i]);
 				emitters [i].emissionRate = 20 * (WeightProportion - 0.5f); 
 			}
 		}
